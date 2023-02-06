@@ -2,6 +2,7 @@
     namespace Entities;
 
     use PDO;
+    use PDOException;
 
     class Database {
         private $dbName = "crudSimples";
@@ -26,7 +27,6 @@
         public function select($where = null, $order = null, $limit = null, $fields = null) {
             $where = strlen($where) ? " WHERE " . $where : '';
 
-
             $queryStr = "";
             if(is_array($fields) == true){
                 $queryStr = "SELECT " . implode(",", $fields) . " FROM " . $this->table . " " . $where;
@@ -47,14 +47,71 @@
             $queryStr = "";
 
             if(is_array($fields) == true && is_array($values) == true) {
-                $queryStr = "INSERT INTO " . $this->table . " (" . implode(",", $fields) . ") VALUES (" . implode(",", $values) . ")";
+                $queryStr = "INSERT INTO " . $this->table . " (" . implode(",", $fields) . ") VALUES ('" . implode("','", $values) . "')";
             } else {
                 $queryStr = "INSERT INTO " . $this->table . "($fields) VALUES ($values)";
             }
+            try {
+                $sql = $this->pdo->prepare($queryStr);
+                $result = $sql->execute();
 
-            $sql = $this->pdo->prepare($queryStr);
-            $sql->execute();
+                return $result;
+            }
+            catch(PDOException $e) {
+                return $e;
+            }
+        }
 
+        public function update($fields = null,$values = null, $where = null) {
+
+            $queryStr = "UPDATE $this->table SET ";
+
+            $where = strlen($where) ? " WHERE " . $where : '';
+
+            if(is_array($fields)) {
+                
+                for($i = 0; $i < count($fields); $i++) {
+                    $queryStr .= $fields[$i] . " = '" . $values[$i] . "'";
+                    if(isset($fields[$i + 1 < count($fields)]) == true) {
+                        $queryStr .= ", ";
+                    }
+                }
+                
+            } else {
+                $queryStr .= "$fields = '$values'";
+            }
+
+            try {
+                $sql = $this->pdo->prepare($queryStr . $where);
+                $result = $sql->execute();
+                
+                return $result;
+            }
+            catch(PDOException $e) {
+                return $e;
+            }
+
+
+            
+        }
+
+        public function delete($where) {
+            $where = strlen($where) ? " WHERE " . $where : "";
+
+            if($where === "") {
+                return false;
+            }
+
+            $queryStr = "DELETE FROM $this->table" . $where;
+
+            try {
+                $sql = $this->pdo->prepare($queryStr);
+                $result = $sql->execute();
+                return $result;
+            }
+            catch(PDOException $e) {
+                return $e;
+            }
             
         }
 
