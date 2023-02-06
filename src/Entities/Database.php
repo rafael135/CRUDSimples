@@ -10,14 +10,18 @@
         private $password = "";
         private $host = "localhost";
 
-        protected PDO $pdo;
-        protected string $table;
+        private PDO $pdo;
+        private string $table;
 
         public function __construct($tableName)
         {
             $this->pdo = new PDO("mysql:dbname=$this->dbName;host=$this->host", $this->user, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->table = $tableName;
+        }
+
+        public function getTable() {
+            return $this->table;
         }
 
         public function setTable($tableName) {
@@ -72,17 +76,20 @@
                 
                 for($i = 0; $i < count($fields); $i++) {
                     $queryStr .= $fields[$i] . " = '" . $values[$i] . "'";
-                    if(isset($fields[$i + 1 < count($fields)]) == true) {
+                    if(($i + 1) < count($fields)) {
                         $queryStr .= ", ";
                     }
+                    
                 }
                 
             } else {
                 $queryStr .= "$fields = '$values'";
             }
 
+            $queryStr .= $where;
+
             try {
-                $sql = $this->pdo->prepare($queryStr . $where);
+                $sql = $this->pdo->prepare($queryStr);
                 $result = $sql->execute();
                 
                 return $result;

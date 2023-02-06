@@ -1,10 +1,10 @@
 <?php 
     require "vendor/autoload.php";
 
-    use Entities\UserDAO;
+    use Entities\UserDaoMySql;
 
-    $userDAO = new UserDAO();
-    $usuarios = $userDAO->getUsers();
+    $userDAO = new UserDaoMySql();
+    $usuarios = $userDAO->getAllUsers();
 
     require_once "src/menus/header.php";
 ?>
@@ -32,7 +32,7 @@
             <td>
                 <div class="btn-group">
                     <a class="btn btn-secondary" href="editar.php?id=<?php echo $usuario->getId(); ?>">Editar</a>
-                    <a class="btn btn-danger" href="excluir.php?id=<?php echo $usuario->getId(); ?>">Excluir</a>
+                    <a class="btn btn-danger" href="src/actions/excluir_action.php?id=<?php echo $usuario->getId(); ?>" onclick="return confirm('Confirma a exclusão?');">Excluir</a>
                 </div>
             </td>
         </tr>

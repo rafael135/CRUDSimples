@@ -2,9 +2,9 @@
     namespace Entities;
 
     class User {
-        protected int $id;
-        protected string $name;
-        protected string $email;
+        private int $id;
+        private string $name;
+        private string $email;
 
         public function __construct($id, $name, $email)
         {

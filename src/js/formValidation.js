@@ -41,7 +41,7 @@ function checkInput(input) {
         switch(requirement) {
             case "required":
                 if(input.value == "") {
-                    let msg = "Campo nâo pode ser vazio!";
+                    let msg = "Campo não pode ser vazio!";
                     addMsg(input, msg);
                     return false;
                 }

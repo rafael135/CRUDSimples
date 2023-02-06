@@ -9,18 +9,18 @@
         <form class="form-control d-flex flex-column justify-content-evenly form-adicionar m-0" id="form" method="POST" action="src/actions/adicionar_action.php">
             <h1 class="text-center">Adicionar Usuário</h1>
             <div class="input-group has-validation">
-                <span class="input-group-text">Nome</span>
+                <!--<span class="input-group-text">Nome</span>-->
                 <div class="form-floating">
-                    <input type="text" class="form-control" name="nome" id="nome" data-requirements="required" placeholder="Digite seu nome">
-                    <label for="nome">Digite seu nome</label>
+                    <input type="text" class="form-control" name="nome" id="nome" data-requirements="required" placeholder="Nome">
+                    <label for="nome">Nome</label>
                 </div>
             </div>
 
             <div class="input-group has-validation">
-                <span class="input-group-text">Email</span>
+                <!--<span class="input-group-text">Email</span>-->
                 <div class="form-floating">
-                    <input type="text" class="form-control" name="email" id="email" data-requirements="required" placeholder="Digite seu email">
-                    <label for="email">Digite seu e-mail</label>
+                    <input type="text" class="form-control" name="email" id="email" data-requirements="required" placeholder="Email">
+                    <label for="email">Email</label>
                 </div>
             </div>
 
