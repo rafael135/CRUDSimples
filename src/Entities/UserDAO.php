@@ -1,10 +1,12 @@
 <?php
     namespace Entities;
 
+    use Entities\User;
+
     interface UserDAO {
-        public function insertUser($nome, $email);
+        public function insertUser(User $usr);
         public function getUserById($id);
-        public function editUserById($id, $name, $email);
+        public function editUserById(User $user);
         public function getAllUsers($where, $fields);
         public function deleteUserById($id);
     }

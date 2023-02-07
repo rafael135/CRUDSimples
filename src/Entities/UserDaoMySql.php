@@ -17,9 +17,12 @@
             return $this->db->getTable();
         }
 
-        public function insertUser($nome, $email) {
+        public function insertUser(User $user) {
+            $name = $user->getName();
+            $email = $user->getEmail();
+
             $fields = ["nome", "email"];
-            $values = [$nome, $email];
+            $values = [$name, $email];
 
             $result = $this->db->insert($fields, $values);
 
@@ -46,7 +49,11 @@
 
         }
 
-        public function editUserById($id, $name, $email) {
+        public function editUserById(User $user) {
+            $id = $user->getId();
+            $name = $user->getName();
+            $email = $user->getEmail();
+
             $where = $this->db->getTable() . ".id = $id";
             $fields = ["nome", "email"];
             $values = [$name, $email];
